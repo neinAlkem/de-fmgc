@@ -1,0 +1,7 @@
+confluent-kafka
+simplejson
+kafka-python
+psycopg2
+pyspark==3.5.0
+
+
