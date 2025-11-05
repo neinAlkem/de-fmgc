@@ -1,4 +1,3 @@
-
 x-airflow-common:
   &airflow-common
   image: apache/airflow:3.1.1
@@ -97,8 +96,7 @@ services:
     <<: *airflow-common
     command: scheduler
     depends_on:
-      - postgres:
-          condition: service_healthy
+      - postgres
 
   airflow-init:
     <<: *airflow-common
@@ -109,8 +107,7 @@ services:
     image: ghcr.io/dbt-labs/dbt-postgres:latest
     container_name: dbt
     depends_on:
-      - postgres:
-          condition: service_healthy 
+      - postgres
     environment:
       DBT_PROFILES_DIR: /usr/app
     volumes:
