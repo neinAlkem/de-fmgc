@@ -5,6 +5,7 @@ import uuid
 import random
 from datetime import datetime
 from fastapi import FastAPI, Query
+import time
 
 products = [
     (1, 'Coffee', 'Ameratto', 'Regular', 5.0, 2.0),
@@ -99,15 +100,16 @@ producerConfig = {
 producer = Producer(producerConfig)
 
 @app.post('/producer')
-async def publish(topic: str = Query('posTransaction'),count: int = Query(20)):
+async def publish(topic: str = Query('posTransaction'),count: int = Query(100), interval: float = Query(5.0)):
     topic = topic.strip()
-    test = []
+    result = []
     for _ in range(count):  
         value = generateData()
         message = json.dumps(value).encode('utf-8')
-        test.append(value)
+        result.append(value)
         
         producer.produce(topic, message)
-    producer.flush()
+        producer.flush()
+        time.sleep(interval)
      
-    return {'Status' : 'Sent', 'Topic' : topic, 'Message' : test}
+    return {'Status' : 'Sent', 'Topic' : topic, 'Message' : result}
