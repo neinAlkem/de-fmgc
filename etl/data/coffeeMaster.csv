@@ -1,14 +1,14 @@
-,ProductId,Product Type,Product,Type
-0,2,Coffee,Columbian,Regular
-1,13,Tea,Green Tea,Regular
-2,5,Espresso,Caffe Mocha,Regular
-3,6,Espresso,Decaf Espresso,Decaf
-4,9,Herbal Tea,Lemon,Decaf
-5,10,Herbal Tea,Mint,Decaf
-6,11,Tea,Darjeeling,Regular
-7,3,Coffee,Decaf Irish Cream,Decaf
-8,8,Herbal Tea,Chamomile,Decaf
-9,12,Tea,Earl Grey,Regular
-10,4,Espresso,Caffe Latte,Regular
-11,1,Coffee,Amaretto,Regular
-12,7,Espresso,Regular Espresso,Regular
+,ProductId,Product Type,Product,Type,Price,COGS
+0,2,Coffee,Columbian,Regular,4.0,1.5
+1,13,Tea,Green Tea,Regular,9.0,3.0
+2,5,Espresso,Caffe Mocha,Regular,7.0,3.0
+3,6,Espresso,Decaf Espresso,Decaf,5.0,1.0
+4,9,Herbal Tea,Lemon,Decaf,10.0,4.0
+5,10,Herbal Tea,Mint,Decaf,12.0,6.0
+6,11,Tea,Darjeeling,Regular,6.0,1.0
+7,3,Coffee,Decaf Irish Cream,Decaf,8.0,3.0
+8,8,Herbal Tea,Chamomile,Decaf,8.0,4.0
+9,12,Tea,Earl Grey,Regular,7.0,2.0
+10,4,Espresso,Caffe Latte,Regular,7.0,3.O
+11,1,Coffee,Amaretto,Regular,5.0,2.0
+12,7,Espresso,Regular Espresso,Regular,4.0,0.5
