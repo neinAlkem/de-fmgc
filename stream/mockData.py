@@ -5,8 +5,23 @@ import uuid
 import random
 from datetime import datetime
 from fastapi import FastAPI, Query
+import threading
+import logging
 import time
 
+logging.basicConfig(format='%(asctime)s %(message)s',
+                    level=logging.INFO)
+log = logging.getLogger()
+
+# ---------------------------------------------------------------------------- #
+#                                GLOBAL SETTING                                #
+# ---------------------------------------------------------------------------- #
+running = False
+producer_thread = None
+
+# ---------------------------------------------------------------------------- #
+#                              POS MOCK DATA FAKER                             #
+# ---------------------------------------------------------------------------- #
 stores = [
     ("S-000001", "Daily Grind Cafe", 314),
     ("S-000002", "Rustic Bean Roastery", 212),
@@ -226,13 +241,13 @@ products = [
     (12, 'Tea', 'Green Tea', 'Regular', 9.0, 3.0)
 ]
 
-
-
-
+# ---------------------------------------------------------------------------- #
+#                              MOCK DATA GENERATOR                             #
+# ---------------------------------------------------------------------------- #
 inventoryStores = {}
 fake = Faker()
 def generateData():
-    productId, price, cogs= random.choice(products)
+    productId, productType, product, type, price, cogs= random.choice(products)
     storeId, storeName, areaCode = random.choice(stores)
     
     startDate = datetime(2010, 1, 1)
@@ -269,25 +284,45 @@ def generateData():
         'Inventory Latest': inventoryBefore,
         'Inventory After': inventoryAfter
     }
-
-app = FastAPI()
-producerConfig = {
-    'bootstrap.servers' : 'localhost:9092'
-}
-
+    
+# ---------------------------------------------------------------------------- #
+#                                  KAKFKA PRODUCER                             #
+# ---------------------------------------------------------------------------- #
+producerConfig = {'bootstrap.servers' : 'localhost:9092'}
 producer = Producer(producerConfig)
 
-@app.post('/producer')
-async def publish(topic: str = Query('posTransaction'),count: int = Query(100), interval: float = Query(5.0)):
-    topic = topic.strip()
-    result = []
-    for _ in range(count):  
-        value = generateData()
-        message = json.dumps(value).encode('utf-8')
-        result.append(value)
+def deliveryReport(err, msg):
+    if err is not None:
+        log.error(f'Delivery failed {msg.key()} : {err}')
+    else:
+        log.info(f"Message delivered to {msg.topic()} [{msg.partition()}] at offset {msg.offset()}")
         
-        producer.produce(topic, message)
-        producer.flush()
-        time.sleep(interval)
-     
-    return {'Status' : 'Sent', 'Topic' : topic, 'Message' : result}
+def produce(topic):
+    topic = topic.strip()
+    global running
+    while running:
+            value = generateData()
+            message = json.dumps(value).encode('utf-8')
+            producer.produce(topic, message, callback=deliveryReport)
+            producer.poll(0)
+            time.sleep(0.5)
+    producer.flush()
+    
+# ---------------------------------------------------------------------------- #
+#                               FASTAPI ENDPOINT                               #
+# ---------------------------------------------------------------------------- #
+app = FastAPI()
+@app.post('/start')
+def startProducer(topic: str = 'posTransaction'):
+    global running
+    if running:
+        return {'status': 'already running'}
+    running = True
+    threading.Thread(target=produce, args=(topic,), daemon=True).start()
+    return {'Status': 'Producer Started'}
+
+@app.post("/stop")
+def stop_producer():
+    global running
+    running = False
+    return {"status": "producer stopped"}
