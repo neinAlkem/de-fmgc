@@ -94,6 +94,8 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
+    ports:
+      - "5435:5432"
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     healthcheck:
@@ -379,5 +381,5 @@ services:
 #       - ./dbt:/usr/app
 #     working_dir: /usr/app
 #     command: ["/bin/sh", "-c", "sleep infinity"]
-# volumes:
-#   postgres-db-volume: 
+volumes:
+  postgres-db-volume: 
