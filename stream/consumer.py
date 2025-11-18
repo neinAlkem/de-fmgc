@@ -1,5 +1,4 @@
 from confluent_kafka import Consumer
-import threading
 
 consumerConfig = {
     'bootstrap.servers' : 'localhost:9092',
