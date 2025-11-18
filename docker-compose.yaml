@@ -368,16 +368,16 @@ services:
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
 
-  dbt:
-    image: ghcr.io/dbt-labs/dbt-postgres:latest
-    container_name: dbt
-    depends_on:
-      - postgres
-    environment:
-      DBT_PROFILES_DIR: /usr/app
-    volumes:
-      - ./dbt:/usr/app
-    working_dir: /usr/app
-    command: ["/bin/sh", "-c", "sleep infinity"]
-volumes:
-  postgres-db-volume:
+#   dbt:
+#     image: ghcr.io/dbt-labs/dbt-postgres:latest
+#     container_name: dbt
+#     depends_on:
+#       - postgres
+#     environment:
+#       DBT_PROFILES_DIR: /usr/app
+#     volumes:
+#       - ./dbt:/usr/app
+#     working_dir: /usr/app
+#     command: ["/bin/sh", "-c", "sleep infinity"]
+# volumes:
+#   postgres-db-volume: 
