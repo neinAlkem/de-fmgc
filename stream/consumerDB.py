@@ -57,7 +57,7 @@ def consumeData(conn, data):
     """
     
     insert= """
-        INSERT INTO dev_public.raw_pos 
+        INSERT INTO dev_stg.pos 
         (
             transaction_id, 
             date_purchased,
