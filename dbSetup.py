@@ -24,15 +24,16 @@ try:
     
     log.info("Creating Schema if not exists...")
     stagingSchema = """
+        CREATE SCHEMA IF NOT EXISTS dev_raw;
+        CREATE SCHEMA IF NOT EXISTS dev_marts; 
         CREATE SCHEMA IF NOT EXISTS dev_stg; 
         CREATE SCHEMA IF NOT EXISTS dev_dbo;
-        CREATE SCHEMA IF NOT EXISTS dev_marts
         """
     cursor.execute(stagingSchema)
     
     log.info("Creating Table if not exists...")
     rawPos_table = """
-        CREATE TABLE IF NOT EXISTS dev_stg.pos 
+        CREATE TABLE IF NOT EXISTS dev_raw.pos 
         ( 
             transaction_id VARCHAR PRIMARY KEY, 
             date_purchased DATE,
@@ -50,7 +51,7 @@ try:
     cursor.execute(rawPos_table)
     
     conn.commit()
-    log.info('Successfully creating stg.pos table...')
+    log.info('Successfully creating dev_raw.pos table...')
 
 except (Exception, psycopg2.Error) as e:
     log.error(f'Error while connecting to DB: {e}')
@@ -60,4 +61,3 @@ finally:
         cursor.close()
         conn.close()
         log.info('DB Connection closed...')
-
