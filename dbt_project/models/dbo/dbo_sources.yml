@@ -1,0 +1,12 @@
+version : 2
+
+sources:
+    - name: stg
+      schema: dev_stg
+      tables:
+        - name: pos
+        - name: areaMaster
+        - name: coffeeMaster
+        - name: storeMaster
+    
+      
