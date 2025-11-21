@@ -23,11 +23,11 @@ try:
     cursor = conn.cursor()
     
     log.info("Creating Schema if not exists...")
-    stagingSchema = 'CREATE SCHEMA IF NOT EXISTS dev_public'
+    stagingSchema = 'CREATE SCHEMA IF NOT EXISTS dev_stg'
     cursor.execute(stagingSchema)
     
     log.info("Creating Table if not exists...")
-    rawPos_table = """CREATE TABLE IF NOT EXISTS dev_public.raw_pos 
+    rawPos_table = """CREATE TABLE IF NOT EXISTS dev_stg.pos 
         ( 
             transaction_id VARCHAR PRIMARY KEY, 
             date_purchased DATE,
@@ -45,7 +45,7 @@ try:
     cursor.execute(rawPos_table)
     
     conn.commit()
-    log.info('Successfully creating raw_pos table...')
+    log.info('Successfully creating stg.pos table...')
 
 except (Exception, psycopg2.Error) as e:
     log.error(f'Error while connecting to DB: {e}')
