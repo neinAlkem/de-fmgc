@@ -16,18 +16,23 @@ params = {
 
 try:
     """ 
-        This block of code is responsible for connecting to a PostgreSQL database using the `psycopg2`, library in Python, creating a schema and a table if they do not already exist, and then closing the database connection.
+        This block of code is responsible for connecting to a PostgreSQL database using the `psycopg2`, library in Python, creating project schemas and a table if they do not already exist, and then closing the database connection.
     """
     
     conn = psycopg2.connect(**params)
     cursor = conn.cursor()
     
     log.info("Creating Schema if not exists...")
-    stagingSchema = 'CREATE SCHEMA IF NOT EXISTS dev_stg'
+    stagingSchema = """
+        CREATE SCHEMA IF NOT EXISTS dev_stg; 
+        CREATE SCHEMA IF NOT EXISTS dev_dbo;
+        CREATE SCHEMA IF NOT EXISTS dev_marts
+        """
     cursor.execute(stagingSchema)
     
     log.info("Creating Table if not exists...")
-    rawPos_table = """CREATE TABLE IF NOT EXISTS dev_stg.pos 
+    rawPos_table = """
+        CREATE TABLE IF NOT EXISTS dev_stg.pos 
         ( 
             transaction_id VARCHAR PRIMARY KEY, 
             date_purchased DATE,
