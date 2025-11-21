@@ -1,3 +1,6 @@
+# This Python code snippet is setting up a Kafka consumer using the `confluent_kafka` library to
+# consume messages from a Kafka topic named 'posTransaction'.
+# Note: This is testing script
 from confluent_kafka import Consumer
 
 consumerConfig = {
