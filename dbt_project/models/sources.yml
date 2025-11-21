@@ -1,0 +1,28 @@
+version : 2
+
+sources:
+    - name: raw
+      schema: dev_raw
+      tables:
+        - name: pos
+        - name: area_master
+        - name: coffee_master
+        - name: store_master
+        
+    - name: stg
+      schema: dev_stg
+      tables:
+        - name: stg_pos
+        - name: stg_area
+        - name: stg_products
+        - name: stg_stores
+
+    - name: dbo
+      schema: dev_dbo
+      tables:
+        - name: dbo_pos
+        - name: dbo_area
+        - name: dbo_products
+        - name: dbo_stores
+    
+      
