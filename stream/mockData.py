@@ -247,6 +247,14 @@ products = [
 inventoryStores = {}
 fake = Faker()
 def generateData():
+    """
+        The `generateData` function creates simulated transaction data for products and stores, updating
+        inventory levels accordingly.
+        :return: The `generateData` function returns a dictionary containing transaction details such as
+        Transaction Id, Date Purchased, Area Code, Store ID, Product ID, Quantity, Unit Price, Total Price,
+        Cost of Goods Sold (COGS), Inventory Latest, and Inventory After.
+    """
+    
     productId, productType, product, type, price, cogs= random.choice(products)
     storeId, storeName, areaCode = random.choice(stores)
     
@@ -288,6 +296,17 @@ def generateData():
 # ---------------------------------------------------------------------------- #
 #                                  KAKFKA PRODUCER                             #
 # ---------------------------------------------------------------------------- #
+"""
+    The code defines a function to produce messages to a Kafka topic with error handling for delivery
+    reports.
+    
+    :param err: The `err` parameter in the `deliveryReport` function is used to capture any error that
+    may occur during the delivery of a message by the producer. If the `err` parameter is not `None`, it
+    indicates that there was an error in delivering the message, and the function logs an error
+    :param msg: The `msg` parameter in the `deliveryReport` function represents the message that was
+    attempted to be delivered by the producer. It contains information such as the key, topic,
+    partition, and offset of the message
+"""
 producerConfig = {'bootstrap.servers' : 'localhost:9092'}
 producer = Producer(producerConfig)
 
@@ -312,6 +331,21 @@ def produce(topic):
 #                               FASTAPI ENDPOINT                               #
 # ---------------------------------------------------------------------------- #
 app = FastAPI()
+"""
+    The code defines two FastAPI endpoints to start and stop a producer thread for a specified topic.
+    
+    :param topic: The `topic` parameter in the `startProducer` function is a string parameter that
+    represents the topic to which messages will be produced. In this case, the default value for the
+    `topic` parameter is set to 'posTransaction', defaults to posTransaction
+    :type topic: str (optional)
+    :return: The `startProducer` function returns a JSON response with the status of the producer,
+    either 'already running' if the producer is already running or 'producer started' if the producer is
+    successfully started.
+    
+    :sample usage: 
+        - curl -X POST http://localhost:{port}/start
+        - curl -X POST http://localhost:{port}/stop
+ """
 @app.post('/start')
 def startProducer(topic: str = 'posTransaction'):
     global running
@@ -319,7 +353,7 @@ def startProducer(topic: str = 'posTransaction'):
         return {'status': 'already running'}
     running = True
     threading.Thread(target=produce, args=(topic,), daemon=True).start()
-    return {'Status': 'Producer Started'}
+    return {'status': 'producer started'}
 
 @app.post("/stop")
 def stop_producer():
