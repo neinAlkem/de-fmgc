@@ -29,17 +29,35 @@ kafkaConf = {
     'auto.offset.reset' : 'earliest'
 }
 
-
 def connectDb():
+    """
+        The `connectDb` function attempts to establish a connection to a PostgreSQL database using the
+        provided parameters and logs an error message if the connection attempt fails.
+        :return: The `connectDb()` function is returning a connection object `conn` if the connection to the
+        database is successful.
+    """
+    
     try:
         conn = psycopg2.connect(**dbParams)
         return conn
     except (Exception, psycopg2.Error) as e:
         log.error(f'Error while connecting to DB: {e}')
 
-def consumeData(conn, data):
+def consumeData(conn, data):    
+    """
+        The function `consumeData` inserts data into a PostgreSQL database table `raw_pos` using the
+        provided connection and data dictionary.
+        
+        :param conn: The `conn` parameter in the `consumeData` function is typically a connection object
+        that represents a connection to a database. This connection object is used to communicate with the
+        database in order to insert data into the specified table
+        :param data: The `consumeData` function is designed to insert data into a database table named
+        `raw_pos`. The function takes two parameters: `conn`, which represents the database connection, and
+        `data`, which is a dictionary containing the following keys and their corresponding values:
+    """
+    
     insert= """
-        INSERT INTO staging.pos 
+        INSERT INTO dev_public.raw_pos 
         (
             transaction_id, 
             date_purchased,
@@ -73,11 +91,20 @@ def consumeData(conn, data):
         conn.rollback()
 
 # ---------------------------------------------------------------------------- #
-#                                FAST API SETUL                                #
+#                                FAST API SETUP                                #
 # ---------------------------------------------------------------------------- #
 consumer = Consumer(kafkaConf)
 consumer.subscribe(['posTransaction'])
 
+"""
+    The code defines a FastAPI application with an asynchronous context manager for managing the
+    lifespan of a database connection and a Kafka consumer for consuming messages.
+    
+    :param conn: The `conn` parameter in your code represents a connection to a database. It is created
+    using the `connectDb()` function and is used to interact with the database within your `main`
+    coroutine. This connection is essential for consuming data from messages received by the `consumer`
+    and passing that data to corresponding database
+"""
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     conn = connectDb()
