@@ -37,7 +37,7 @@ models:
     
 seeds:
   dbt_project:
-    +schema: public
+    +schema: stg
     +quote_schema: False
     areaMaster:
       +column_types:
