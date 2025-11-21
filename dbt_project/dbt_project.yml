@@ -31,13 +31,20 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dbt_project:
-    staging:
+    stg:
+      +enabled: True
       +materialized: table
       +schema: stg
+
+    dbo:
+      +enabled: True
+      +materialized: table
+      +schema: dbo
     
 seeds:
   dbt_project:
-    +schema: stg
+    enabled: False
+    +schema: raw
     +quote_schema: False
     areaMaster:
       +column_types:
