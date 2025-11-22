@@ -40,6 +40,11 @@ models:
       +enabled: True
       +materialized: table
       +schema: dbo
+
+    marts:
+      +enabled: True
+      +materialized: table
+      +schema: marts
     
 seeds:
   dbt_project:
