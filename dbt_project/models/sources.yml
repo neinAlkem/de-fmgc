@@ -25,4 +25,10 @@ sources:
         - name: dbo_products
         - name: dbo_stores
     
+    - name: marts
+      schema: dev_marts
+      tables:
+        - name: marts_daily_sales
+        - name: marts_date
+    
       
