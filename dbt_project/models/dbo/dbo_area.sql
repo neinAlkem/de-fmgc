@@ -9,7 +9,7 @@ WITH dbo_area AS(
     SELECT * FROM {{ source('stg', 'stg_area') }}
 ), rename AS(
     SELECT
-        CAST(area_code AS INT ) AS area_code,
+        CAST(area_code AS CHAR(3) ) AS area_code,
         CAST(state AS VARCHAR) AS state,
         CAST(market AS VARCHAR) AS market,
         CAST(market_size AS VARCHAR) AS market_size,
