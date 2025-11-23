@@ -8,6 +8,8 @@ requests
 apache-airflow
 dbt-core
 dbt-postgres
+prophet
+joblib
 
 
 
