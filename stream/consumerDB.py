@@ -1,7 +1,6 @@
 from confluent_kafka import Consumer
 import simplejson as json
 import psycopg2
-import sys
 import logging
 import asyncio
 from fastapi import FastAPI
