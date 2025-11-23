@@ -29,12 +29,10 @@ kafkaConf = {
 }
 
 def connectDb():
-    """
-        The `connectDb` function attempts to establish a connection to a PostgreSQL database using the
-        provided parameters and logs an error message if the connection attempt fails.
-        :return: The `connectDb()` function is returning a connection object `conn` if the connection to the
-        database is successful.
-    """
+    #     The `connectDb` function attempts to establish a connection to a PostgreSQL database using the
+    #     provided parameters and logs an error message if the connection attempt fails.
+    #     :return: The `connectDb()` function is returning a connection object `conn` if the connection to the
+    #     database is successful.
     
     try:
         conn = psycopg2.connect(**dbParams)
