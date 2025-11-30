@@ -35,7 +35,7 @@ for id in product_id:
                 WHERE product_id = {id} 
                 ORDER BY date 
                 )
-                TO STDOUT WITH CSV DELIMITER ';'
+                TO STDOUT WITH CSV HEADER DELIMITER ';'
             """
             
         with open(f"{output_dir}/{id}.csv", 'w') as f:
