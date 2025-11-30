@@ -4,3 +4,4 @@ logs/
 *.pyc
 sales.csv
 *.ipynb
+models/trainingData/
