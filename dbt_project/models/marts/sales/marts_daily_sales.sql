@@ -47,8 +47,8 @@ base_table AS(
 lags AS (
     SELECT 
         *,
-        {{ get_lags('total_sales', 'lag(total_sales, 1, 0) OVER (ORDER BY date)') }} AS lag_1day,
-        {{ get_lags('total_sales', 'lag(total_sales, 7, 0) OVER (ORDER BY date)') }} AS lag_7day
+        {{ get_lags('total_sales', 'lag(total_sales, 1, 0) OVER (PARTITION BY store_id ORDER BY date)') }} AS lag_1day,
+        {{ get_lags('total_sales', 'lag(total_sales, 7, 0) OVER (PARTITION BY store_id ORDER BY date)') }} AS lag_7day
     FROM base_table
 ), 
 
