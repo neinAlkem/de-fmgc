@@ -30,5 +30,6 @@ sources:
       tables:
         - name: marts_daily_sales
         - name: marts_date
+        - name: marts_products_daily_sales
     
       
