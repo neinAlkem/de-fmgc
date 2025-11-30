@@ -258,7 +258,7 @@ def generateData():
     productId, productType, product, type, price, cogs= random.choice(products)
     storeId, storeName, areaCode = random.choice(stores)
     
-    startDate = datetime(2025, 11, 1)
+    startDate = datetime(2025, 1, 1)
     endDate = datetime.today()
     
     quantity = random.randint(1,10)
