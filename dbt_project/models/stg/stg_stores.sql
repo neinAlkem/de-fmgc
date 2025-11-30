@@ -5,7 +5,10 @@
 WITH stg_stores AS(
     SELECT * FROM {{ source('raw', 'store_master') }}
 ), stores AS(
-    SELECT *,
+    SELECT 
+        CAST(store_id AS VARCHAR) AS store_id,
+        CAST(store_name AS VARCHAR) AS store_name,
+        CAST(area_code AS VARCHAR) AS area_code, 
     md5(
         concat_ws('||', 
             store_id,
