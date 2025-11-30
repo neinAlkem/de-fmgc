@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: stg_area
+    columns:
+      - name: area_code
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stores
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_pos
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: area_code
+        test: 
+          - relationships:
+              to: ref('stg_area')
+              field: area_code
+      - name: store_id
+        tests: 
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+
+  - name: marts_products_daily_sales 
+    tests: 
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date
+            - product_id
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - test_date_not_tommorow
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dbo_products')
+              field: product_id
+      - name: total_sales
+        tests:
+          - not_null
+          - test_not_negative
+
+  - name: marts_daily_sales 
+    tests: 
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date
+            - store_id
+      - dbt_utils.expression_is_true:
+              expression: 'total_revenue >= gross_revenue'
+      - dbt_utils.expression_is_true:
+              expression: 'weekly_rolling_sum >= total_sales'
+      - dbt_utils.expression_is_true:
+              expression: 'weekly_rolling_sum >= weekly_rolling_avg'
+    columns:
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('dbo_stores')
+              field: store_id
+      - name: date
+        tests:
+          - not_null
+          - test_date_not_tommorow
+      - name: total_transaction
+        tests:
+          - test_not_negative
+          - not_null
+      - name: total_sales
+        tests:
+          - test_not_negative
+          - not_null
+      - name: total_revenue
+        tests:
+          - test_not_negative
+          - not_null
+
+
+
