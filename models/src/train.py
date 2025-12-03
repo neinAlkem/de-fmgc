@@ -20,10 +20,7 @@ class forecastModel:
         self.results_summary = []
         
         os.makedirs(output_dir, exist_ok=True)
-    
-    # ----------------------------------------------
-    # LOAD + CLEANING (MISSING DATE + OUTLIER)
-    # ----------------------------------------------
+
     def _loadData(self, path):
         if not os.path.exists(path):
             raise FileNotFoundError(f"File {path} not found.")
@@ -32,30 +29,25 @@ class forecastModel:
         df = df.sort_values('ds').dropna(subset=['ds','y'])
         df['y'] = df['y'].astype(float)
 
-        # --- Make daily frequency to avoid Prophet issues ---
+        # Daily frequency
         df = df.set_index('ds').asfreq('D')
 
-        # --- Fill with interpolation for missing days ---
+        # Interpolate missing
         df['y'] = df['y'].interpolate()
 
-        # --- Outlier Smoothing (IQR) ---
-        Q1 = df['y'].quantile(0.25)
-        Q3 = df['y'].quantile(0.75)
-        IQR = Q3 - Q1
-        lower, upper = Q1 - 1.5*IQR, Q3 + 1.5*IQR
-        df['y'] = np.clip(df['y'], lower, upper)
+        # Smooth outlier with rolling median
+        df['y'] = df['y'].rolling(7, min_periods=1, center=True).median()
 
-        df = df.reset_index()  
-        return df
-    
-    # ----------------------------------------------
-    # TRAIN MODEL
-    # ----------------------------------------------
+        # Add regressor
+        df['is_weekend'] = df.index.dayofweek >= 5
+
+        return df.reset_index()
+
     def _trainModel(self, df, cp_scale, sp_scale, extra_regressors=None):
         model = Prophet(
             daily_seasonality=False,
             weekly_seasonality=True,
-            yearly_seasonality=False,
+            yearly_seasonality=True,
             changepoint_prior_scale=cp_scale,
             seasonality_prior_scale=sp_scale,
         )
@@ -67,22 +59,32 @@ class forecastModel:
         model.fit(df)
         return model
     
-    # ----------------------------------------------
-    # EVALUATE MODEL (MAE)
-    # ----------------------------------------------
     def _evaluate(self, model, df):
-        preds = model.predict(df[['ds']])
-        return mae(df['y'], preds['yhat'])
-    
-    # ----------------------------------------------
-    # HYPERPARAMETER TUNING
-    # ----------------------------------------------
+        split = int(len(df) * 0.8)
+        train = df.iloc[:split]
+        test = df.iloc[split:]
+
+        # FIX: include regressors
+        future = test[['ds', 'is_weekend']]
+        preds = model.predict(future)
+
+        return mae(test['y'], preds['yhat'])
+
+    def _prepare_future(self, df, periods=7):
+        last_date = df['ds'].max()
+        future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=periods)
+        
+        future = pd.DataFrame({"ds": future_dates})
+        future["is_weekend"] = future["ds"].dt.dayofweek >= 5
+        return future
+
     def _tune(self, df):
         param_grid = [
-            (0.01, 5),
-            (0.1, 10),
-            (0.3, 10),
-            (0.5, 15)
+            (0.5, 5),
+            (1.0, 10),
+            (2.0, 10),
+            (5.0, 15),
+            (10.0, 20)
         ]
 
         best_mae = float('inf')
@@ -91,7 +93,7 @@ class forecastModel:
 
         for cp, sp in param_grid:
             try:
-                model = self._trainModel(df, cp, sp)
+                model = self._trainModel(df, cp, sp, extra_regressors=['is_weekend'])
                 score = self._evaluate(model, df)
 
                 if score < best_mae:
@@ -105,10 +107,7 @@ class forecastModel:
 
         return best_model, best_params, best_mae
     
-    # ----------------------------------------------
-    # FULL PIPELINE
-    # ----------------------------------------------
-    def modelPipeline(self, extra_regressors=None):
+    def modelPipeline(self):
         for product in range(1, 13):
             filePath = os.path.join(self.input_dir, f"{product}.csv")
             
@@ -120,10 +119,10 @@ class forecastModel:
                 cp, sp = best_params
 
                 log.info(
-                    f"Product {product} | MAE: {best_score:.2f} | "
-                    f"cp={cp}, sp={sp}"
+                    f"Product {product} | MAE: {best_score:.2f} | cp={cp}, sp={sp}"
                 )
 
+                # Save model
                 model_path = os.path.join(self.output_dir, f"model_{product}.joblib")
                 dump(model, model_path)
 
