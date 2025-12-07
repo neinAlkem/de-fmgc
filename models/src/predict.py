@@ -21,7 +21,8 @@ class forecastPredictor():
     def _save_to_postgres(self,df):
         conn = self._connect_db()
         curr = conn.cursor()
-    
+        curr.execute("CREATE SCHEMA IF NOT EXISTS dev_marts;")
+        
         create_table = """
             CREATE TABLE IF NOT EXISTS dev_marts.product_forecast(
                 ds DATE,
