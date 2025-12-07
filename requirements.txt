@@ -1,15 +1,14 @@
 confluent-kafka
 simplejson
 kafka-python
-psycopg2
-pyspark==3.5.0
+psycopg2-binary
 pandas
 requests
-apache-airflow
 dbt-core
 dbt-postgres
 prophet
 joblib
+apache-airflow-providers-postgres
 
 
 
