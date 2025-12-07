@@ -2,6 +2,7 @@ version: 2
 
 models:
   - name: stg_area
+    description: "**Staging Area** - Staging reference table for geographical areas. Contains unique area codes used to map stores and transactions to specific regions for location-based analysis" 
     columns:
       - name: area_code
         tests:
@@ -9,6 +10,7 @@ models:
           - not_null
 
   - name: stg_products
+    description: "**Staging Area** - Staging table containing the master catalog of products. Ensures all products have unique identifiers before joining with transaction data" 
     columns:
       - name: product_id
         tests:
@@ -16,6 +18,7 @@ models:
           - not_null
 
   - name: stg_stores
+    description: "**Staging Area** - Staging table containing details for all retail store locations. Acts as the primary dimension for store-level reporting."
     columns:
       - name: store_id
         tests:
@@ -23,13 +26,14 @@ models:
           - not_null
 
   - name: stg_pos
+    description: "**Staging Area** - Cleaned Point of Sales (POS) transaction data. Each row represents a single transaction line item, linked to dimensions such as store, product, and area. This is the foundation for downstream sales analysis."
     columns:
       - name: transaction_id
         tests:
           - unique
           - not_null
       - name: area_code
-        test: 
+        tests: 
           - relationships:
               to: ref('stg_area')
               field: area_code
@@ -43,8 +47,20 @@ models:
           - relationships:
               to: ref('stg_products')
               field: product_id
+  - name: dbo_area
+    description: "**DBO area** - Standardized dimension table for geographical definitions. Contains market size classifications and regional mapping used to group stores. " 
+  
+  - name: dbo_pos
+    description: "**DBO area** - Incremental fact table containing Point of Sales (POS) transactions. Each row represents a line item in a transaction."
+  
+  - name: dbo_products
+    description: "**DBO area** - Standardized product dimension table. Contains the master catalog of items, including names, types, and base pricing."
+
+  - name: dbo_stores
+    description: "**DBO area** - Standardized store dimension table. Contains physical location details and attributes for every retail outlet."
 
   - name: marts_products_daily_sales 
+    description: "**Marts Area - Daily sales performance aggregated by product. Used to track product-level trends, sales velocity, and identifying top-performing items on a day-to-day basis."
     tests: 
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -67,6 +83,7 @@ models:
           - test_not_negative
 
   - name: marts_daily_sales 
+    description: "**Marts Area** - Executive summary of daily store performance. Aggregates total revenue, transaction counts, and sales quantities per store per day. Includes calculated metrics like weekly rolling averages for trend analysis."
     tests: 
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
