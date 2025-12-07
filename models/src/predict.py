@@ -33,9 +33,14 @@ class forecastPredictor():
             """
         curr.execute(create_table)
         
+        delete_previous_prediction = """
+            DELETE FROM dev_marts.product_forecast
+        """
+        curr.execute(delete_previous_prediction)
+        
         insert_query = """
-        INSERT INTO dev_marts.product_forecast (ds, product, yhat, yhat_lower, yhat_upper)
-        VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO dev_marts.product_forecast (ds, product, yhat, yhat_lower, yhat_upper)
+            VALUES (%s, %s, %s, %s, %s)
         """
         
         for _, row in df.iterrows():
