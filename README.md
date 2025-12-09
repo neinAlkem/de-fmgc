@@ -64,12 +64,16 @@ It includes:
 - Forecasting and analytics layers
 - Infrastructure setup using Docker and service orchestration
 
+---
+
 ##  Project Goal
 1. Build a complete end-to-end data pipeline that simulates real FMCG operations.
 2. Forecast retail product demand using predictive modeling.
 3. Transform raw data into analytics-ready models through a structured ETL/ELT workflow.
 4. Provide actionable business insights through dashboards and analytical reporting.
 5. Deploy a fully containerized, production-like data environment for realistic FMCG simulations.
+
+---
 
 ##  Project Structure
 <details open>
