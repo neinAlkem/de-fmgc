@@ -398,10 +398,12 @@ It includes:
 
 ---
 ##  Data Flow
+![data flow](assets/data_flow.png)
 ---
 ##  Query Analysis
 ---
 ##  Visualization Report
+![dashboard](assets/dashboard_pbi.png)
 ---
 ##  Getting Started
 
