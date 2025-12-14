@@ -64,16 +64,12 @@ It includes:
 - Forecasting and analytics layers
 - Infrastructure setup using Docker and service orchestration
 
----
-
 ##  Project Goal
 1. Build a complete end-to-end data pipeline that simulates real FMCG operations.
 2. Forecast retail product demand using predictive modeling.
 3. Transform raw data into analytics-ready models through a structured ETL/ELT workflow.
 4. Provide actionable business insights through dashboards and analytical reporting.
 5. Deploy a fully containerized, production-like data environment for realistic FMCG simulations.
-
----
 
 ##  Project Structure
 <details open>
@@ -84,19 +80,19 @@ It includes:
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/docker-compose.yaml'>docker-compose.yaml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Build image and container for the project</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dockerfile'>dockerfile</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Custom image for airflow to support DBT</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/requirements.txt'>requirements.txt</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Project Depedencies</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbSetup.py'>dbSetup.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Initial setup for postgres database</code></td>
 			</tr>
 			</table>
 		</blockquote>
@@ -113,7 +109,7 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/etl/dags/weekly/weekly_salesForecast.py'>weekly_salesForecast.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Weekly scheduled jobs</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -124,7 +120,7 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/etl/dags/yearly/placeholder.txt'>placeholder.txt</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Yearly scheduled jobs</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -135,7 +131,7 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/etl/dags/daily/daily_salesAggregation.py'>daily_salesAggregation.py</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Daily scheduled jobs</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -146,7 +142,7 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/etl/dags/monthly/placehorder.txt'>placehorder.txt</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Monthly scheduled jobs</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -161,23 +157,23 @@ It includes:
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/.user.yml'>.user.yml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Auto generated key for DBT</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/dbt_project.yml'>dbt_project.yml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Models setup and schema</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/package-lock.yml'>package-lock.yml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Auto write installed depedencies</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/profiles.yml'>profiles.yml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ DBT profiles, used for airflow to recognize DBT module</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/packages.yml'>packages.yml</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ DBT project depedencies to install</code></td>
 			</tr>
 			</table>
 			<details>
@@ -186,7 +182,7 @@ It includes:
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/macros/aggregation.sql'>aggregation.sql</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Custom macro for colums to count lags</code></td>
 					</tr>
 					</table>
 					<details>
@@ -195,11 +191,11 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/macros/custom_tests/test_not_negative.sql'>test_not_negative.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Test case to make sure no negative number in columns</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/macros/custom_tests/test_date_not_tommorow.sql'>test_date_not_tommorow.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Test case to make sure date is not bigger than today</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -212,11 +208,11 @@ It includes:
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/schema.yml'>schema.yml</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Models test case and description</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/sources.yml'>sources.yml</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Data source definition</code></td>
 					</tr>
 					</table>
 					<details>
@@ -225,19 +221,19 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/stg/stg_pos.sql'>stg_pos.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Staging table for POS</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/stg/stg_area.sql'>stg_area.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Staging table for areas</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/stg/stg_stores.sql'>stg_stores.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Staging table for stores</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/stg/stg_products.sql'>stg_products.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ Staging table for producst</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -251,11 +247,11 @@ It includes:
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/marts/sales/marts_daily_sales.sql'>marts_daily_sales.sql</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Marts to aggregate daily stores sales</code></td>
 									</tr>
 									<tr>
 										<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/marts/sales/marts_products_daily_sales.sql'>marts_products_daily_sales.sql</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Marts to aggregate daily products sales across stores</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -266,7 +262,7 @@ It includes:
 									<table>
 									<tr>
 										<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/marts/core/marts_date.sql'>marts_date.sql</a></b></td>
-										<td><code>❯ REPLACE-ME</code></td>
+										<td><code>❯ Dates dimension table</code></td>
 									</tr>
 									</table>
 								</blockquote>
@@ -279,19 +275,19 @@ It includes:
 							<table>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/dbo/dbo_pos.sql'>dbo_pos.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ DBO table for POS</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/dbo/dbo_products.sql'>dbo_products.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ DBO table for products</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/dbo/dbo_stores.sql'>dbo_stores.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ DBO table for stores</code></td>
 							</tr>
 							<tr>
 								<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/dbt_project/models/dbo/dbo_area.sql'>dbo_area.sql</a></b></td>
-								<td><code>❯ REPLACE-ME</code></td>
+								<td><code>❯ DBO table for areas</code></td>
 							</tr>
 							</table>
 						</blockquote>
@@ -309,51 +305,51 @@ It includes:
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_10.joblib'>model_10.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Prediction model for product id = 10</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_1.joblib'>model_1.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 1</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_12.joblib'>model_12.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 12</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_5.joblib'>model_5.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 5</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_3.joblib'>model_3.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 3</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_9.joblib'>model_9.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 9</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_2.joblib'>model_2.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 2</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_11.joblib'>model_11.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 11</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_4.joblib'>model_4.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 4</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_6.joblib'>model_6.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 6</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_7.joblib'>model_7.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 7</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/model/model_8.joblib'>model_8.joblib</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯  Prediction model for product id = 8</code></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -364,15 +360,15 @@ It includes:
 					<table>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/src/predict.py'>predict.py</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Inference scripts to forecast products sales for the next 7 days</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/src/train.py'>train.py</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Train model with new weekly data</code></td>
 					</tr>
 					<tr>
 						<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/models/src/extractData.py'>extractData.py</a></b></td>
-						<td><code>❯ REPLACE-ME</code></td>
+						<td><code>❯ Extracting training data from database</code></td>
 					</tr>
 					</table>
 				</blockquote>
@@ -385,32 +381,26 @@ It includes:
 			<table>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/stream/consumerDB.py'>consumerDB.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Send recieved data from kafka to database</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/stream/mockData.py'>mockData.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Send mock POS data with FAST API to consumerDB</code></td>
 			</tr>
 			<tr>
 				<td><b><a href='https://github.com/neinAlkem/de-fmgc/blob/master/stream/consumer.py'>consumer.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
+				<td><code>❯ Test script</code></td>
 			</tr>
 			</table>
 		</blockquote>
 	</details>
 </details>
 
----
 ##  Data Flow
 ![data flow](assets/data_flow.png)
----
-##  Query Analysis
----
 ##  Visualization Report
 ![dashboard](assets/dashboard_pbi.png)
----
 ##  Getting Started
-
 ###  Prerequisites
 
 Before getting started with de-fmgc, ensure your runtime environment meets the following requirements:
@@ -419,10 +409,7 @@ Before getting started with de-fmgc, ensure your runtime environment meets the f
 - **Package Manager:** Pip or UV
 - **Container Runtime:** Docker
 
-
 ###  Installation
-
-Install de-fmgc using one of the following methods:
 
 **Build from source:**
 
@@ -435,68 +422,55 @@ Install de-fmgc using one of the following methods:
 ```sh
 ❯ cd de-fmgc
 ```
----
-##  Project Roadmap
 
+3. Create and activate virtual envirovment:
+```sh
+❯ python -m venv .venv && source .venv/Scrips/activate
+```
+
+4. Install Depedencies:
+```sh
+❯ pip install -r requirements.txt
+```
+
+5. Build and run dockerfile:
+```sh
+❯ docker compose up -d --build
+```
+
+6. Run initial setup for database:
+```sh
+❯ python dbSetup.py
+```
+
+7. Start stream services:
+```sh
+❯ uvicorn stream.mockData:app --port 8001 --reload
+❯ uvicorn stream.consumerDB:app --port 8002 --reload ( new +1 terminal )
+❯ http://localhost:8001/start ( new +1 terminal )
+```
+
+8. Install DBT deps and run models:
+```sh
+❯ cd dbt_project 
+❯ dbt deps && dbt run
+```
+
+9. Use airflow (opern in browser - use given user and pass from dockerfile):
+```sh
+❯ localhost:8080 
+```
+
+10. Check inserted data in postgres ( POS table ):
+```sh
+❯ docker exect -it de-fmgc-postgres-1 psql -U airflow
+❯ \c fmgc
+❯ select * from dev_dbo.dbo_pos;
+```
+
+##  Project Roadmap
 - [X] **`Task 1`**: <strike>Build end to end data pipeline.</strike>
 - [X] **`Task 2`**: <strike>Implement forecasting model with Prophet model.</strike>
 - [X] **`Task 3`**: <strike>Implement apache airflow for orchestration.</strike>
-- [ ] **`Task 4`**: Create power BI Dashboard for visualization and auto report.
+- [X] **`Task 4`**: <strike>Create power BI Dashboard for visualization and auto report.</strike>
 
-
-<!-- ---
-
-##  Contributing
-
-- **💬 [Join the Discussions](https://github.com/neinAlkem/de-fmgc/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://github.com/neinAlkem/de-fmgc/issues)**: Submit bugs found or log feature requests for the `de-fmgc` project.
-- **💡 [Submit Pull Requests](https://github.com/neinAlkem/de-fmgc/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-
-<details closed>
-<summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your github account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone https://github.com/neinAlkem/de-fmgc
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to github**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
-
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://github.com{/neinAlkem/de-fmgc/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=neinAlkem/de-fmgc">
-   </a>
-</p>
-</details>
-
----
-
-##  License
-
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-##  Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
---- -->
