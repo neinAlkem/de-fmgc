@@ -19,7 +19,7 @@
 	</p>
     </div>
 </div>
-<br clear="left"/>
+<!-- <br clear="left"/> -->
 
 ##  Project Overview
 This project simulates the complete data flow inside a typical Fast-Moving Consumer Goods (FMCG) company. It is designed to represent how real-world FMCG businesses manage retail demand forecasting, inventory tracking, supply-chain decisions, and operational reporting through data pipelines.
